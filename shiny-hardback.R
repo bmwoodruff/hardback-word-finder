@@ -4,6 +4,7 @@ library(tidyverse)
 
 ui <- fluidPage(
   titlePanel("Hardback Word Finder"),
+  HTML('Place the letters that you must and/or desire to be required as part of your word (so inked, special, timeless classics, etc.) in the "Required Letters:" section. Place all other letters in the "Optional Letters" section. These letters will be considered as wilds and may or not be included in the final word. Then click "Find Words" to obtain all possible words from 12dicts 2of12inf.txt dictionay (valid for playing in Harback at boardgamearena.com with the default dictionary). The list is sorted by number of matched letters (so fewest wilds). Based on possible combos, the top words may or may not be the best.</p>'),
   sidebarLayout(
     sidebarPanel(
       textInput(inputId = "letters_req",
@@ -32,8 +33,8 @@ server <- function(input, output) {
     mutate(length = str_length(word))
   
   my_table <- eventReactive(input$find_words, {
-    letters_required <- input$letters_req %>% str_to_lower()
-    letters_optional <- input$letters_opt %>% str_to_lower()
+    letters_required <- input$letters_req %>% str_to_lower() %>% str_remove_all("[^[:alpha:]]")
+    letters_optional <- input$letters_opt %>% str_to_lower() %>% str_remove_all("[^[:alpha:]]")
     
     wanted_letters_min <- str_length(letters_required)
     wanted_letters_max <- str_length(letters_required)+str_length(letters_optional)

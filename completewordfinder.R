@@ -3,10 +3,10 @@
 library(tidyverse)
 library(stringr)
 
-letters_required <- "abd"
+letters_required <- "abd,."
 letters_optional <- "d"
 
-
+letters_required <- letters_required %>% str_remove_all("[^[:alpha:]]")
 
 #I need a function that will return a list of valid words, along with an updated match score, and length. 
 #The function should take as input a dictionary. 
