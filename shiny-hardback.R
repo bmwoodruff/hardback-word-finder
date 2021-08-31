@@ -81,7 +81,8 @@ server <- function(input, output) {
     }
     
     req_dict_updated %>% 
-      arrange(-matches)
+      arrange(-matches) %>% 
+      mutate(matches = as.integer(matches))
   } )
   
   output$myTable <- renderTable(my_table())
