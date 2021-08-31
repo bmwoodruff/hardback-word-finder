@@ -47,7 +47,9 @@ server <- function(input, output) {
     
     req_dict <- my_dat
     
-    for(i in 1:length(unique_letters)){
+    i <- 0
+    while(i < length(unique_letters)){
+      i <- i+1
       req_dict <- req_dict %>% 
         mutate(matches = matches + pmin(str_count(word,unique_letters[i]),letters_freq[i]))
     }
@@ -70,7 +72,9 @@ server <- function(input, output) {
     letters_freq_opt <- my_let_table_opt %>% pull(freq_opt)
     letters_freq_used <- my_let_table_opt %>% pull(freq)
     
-    for(i in 1:length(unique_letters_opt)){
+    i <- 0
+    while(i < length(unique_letters_opt)){
+      i <- i+1
       req_dict_updated <- req_dict_updated %>% 
         mutate(matches = matches + pmin(str_count(word,unique_letters_opt[i])-letters_freq_used[i],letters_freq_opt[i]))
     }

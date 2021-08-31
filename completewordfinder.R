@@ -3,8 +3,10 @@
 library(tidyverse)
 library(stringr)
 
-letters_required <- "lllle"
-letters_optional <- "bae"
+letters_required <- "abd"
+letters_optional <- "d"
+
+
 
 #I need a function that will return a list of valid words, along with an updated match score, and length. 
 #The function should take as input a dictionary. 
@@ -33,8 +35,9 @@ unique_letters <- my_let_table %>% pull(letter)
 letters_freq <- my_let_table %>% pull(freq)
 
 req_dict <- my_dat
-
-for(i in 1:length(unique_letters)){
+i <- 0
+while(i < length(unique_letters)){
+  i <- i+1
   req_dict <- req_dict %>% 
     mutate(matches = matches + pmin(str_count(word,unique_letters[i]),letters_freq[i]))
 }
@@ -68,7 +71,9 @@ unique_letters_opt <- my_let_table_opt %>% pull(letter)
 letters_freq_opt <- my_let_table_opt %>% pull(freq_opt)
 letters_freq_used <- my_let_table_opt %>% pull(freq)
 
-for(i in 1:length(unique_letters_opt)){
+i <- 0
+while(i<length(unique_letters_opt)){
+  i <- i+1
   req_dict_updated <- req_dict_updated %>% 
     mutate(matches = matches + pmin(str_count(word,unique_letters_opt[i])-letters_freq_used[i],letters_freq_opt[i]))
 }
