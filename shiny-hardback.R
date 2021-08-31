@@ -25,14 +25,15 @@ ui <- fluidPage(
 server <- function(input, output) {
   words <- read_lines("2of12inf.txt") %>% 
     str_remove_all("!") %>% 
-    str_remove_all("%")
+    str_remove_all("%") %>% 
+    str_to_lower()
   my_dat <- tibble(word = words) %>% 
     mutate(matches = c(0)) %>% 
     mutate(length = str_length(word))
   
   my_table <- eventReactive(input$find_words, {
-    letters_required <- input$letters_req
-    letters_optional <- input$letters_opt
+    letters_required <- input$letters_req %>% str_to_lower()
+    letters_optional <- input$letters_opt %>% str_to_lower()
     
     wanted_letters_min <- str_length(letters_required)
     wanted_letters_max <- str_length(letters_required)+str_length(letters_optional)
